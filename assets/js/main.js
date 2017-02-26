@@ -76,11 +76,27 @@ jQuery(document).ready(function($) {
         var index = $(this).index();
         for (var i = 0; i < $("#review_form .fa").length; i++) {
             if (i < index) {
-                $("#review_form .fa").eq(i).css('color', '#fc5f09');
+                $("#review_form .fa").eq(i).addClass('rated');
             } else {
-                $("#review_form .fa").eq(i).css('color', 'inherit');
+                $("#review_form .fa").eq(i).removeClass('rated');
             }
         }
         $('#rate').val(index);
+    });
+
+    $("#review_form .fa").hover(function() {
+        var index = $(this).index();
+        for (var i = 0; i < $("#review_form .fa").length; i++) {
+            if (i < index) {
+                $("#review_form .fa").eq(i).addClass('rated');
+            } else {
+                $("#review_form .fa").eq(i).removeClass('rated');
+            }
+        }
+    }, function() {
+        for (var i = 0; i < $("#review_form .fa").length; i++) {
+            $("#review_form .fa").eq(i).removeClass('rated');
+
+        }
     });
 });

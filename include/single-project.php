@@ -11,6 +11,7 @@ get_header(); ?>
         // Global values
         $freelancer_id = get_post_meta( get_the_ID(), 'freelancer_id', true );
         $author_id = get_the_author_meta('ID');
+        $status = get_post_meta( get_the_ID(), 'project_status', true );
 
         // Freelancer accepts to work on this project
         if (isset($_POST['project_id'])) {
@@ -25,6 +26,35 @@ get_header(); ?>
             update_post_meta(get_the_ID(), 'project_status', 'done');
             wp_mail(get_user_meta( $freelancer_id, 'user_email')[0], 'CONFIRM PROJECT DONE', 'Congratulation! Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has confirm your work is done!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
             $mes = 'Congratulation!';
+        }
+
+        // Review handle
+        if (isset($_POST['rate'])) {
+            $data = array(
+                'project_id' => get_the_ID()
+            );
+            if (isset($_POST['freelancer_review'])) {
+                $data['from_id'] = $freelancer_id;
+                $data['to_id'] = $author_id;
+                $data['review'] = $_POST['freelancer_review'];
+
+                // add_user_meta( get_current_user_id(), 'project_id', get_the_ID());
+                wp_mail(get_user_meta( $author_id, 'user_email')[0], 'FREELANCER REVIEW', 'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has said something about you!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
+                $mes = 'Great job! We will contact to the employee!';
+            } else{
+                $data['from_id'] = $author_id;
+                $data['to_id'] = $freelancer_id;
+                $data['review'] = $_POST['customer_review'];
+                wp_mail(get_user_meta( $freelancer_id, 'user_email')[0], 'CUSTOMER REVIEW', 'Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has said somthing about you!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
+                $mes = 'Congratulation!';
+            }
+            if ($status == 'once_review') {
+                update_post_meta(get_the_ID(), 'project_status', 'closed');
+            }
+            else{
+                update_post_meta(get_the_ID(), 'project_status', 'once_review');
+            }
+            add_review($data);
         }
 
         // Global values
@@ -64,7 +94,7 @@ get_header(); ?>
 
                         </p>
                     </header>
-                    <?php if ( $status == 'done' || $static == 'once_review' ): ?>
+                    <?php if ( can_review(get_current_user_id(), get_the_ID()) ):?>
                         <div class="collapse col-xs-12" id="review_form">
                             <div class="row">
                                 <form action="" method="POST">
@@ -75,13 +105,19 @@ get_header(); ?>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
-                                        <input type="hidden" id="rate" name="rate">
+                                        <input type="hidden" id="rate" name="rate" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="review">Review:</label>
-                                        <textarea class="form-control" id="review" placeholder="It was greate"></textarea>
-                                    </div>
-                                    
+                                    <?php if (get_current_user_id() == $author_id ): ?>
+                                        <div class="form-group">
+                                            <label for="customer_review">Review:</label>
+                                            <textarea class="form-control" id="customer_review" placeholder="It was greate" name="customer_review" rows="5" required></textarea>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="form-group">
+                                            <label for="freelancer_review">Review:</label>
+                                            <textarea class="form-control" id="freelancer_review" placeholder="It was greate" name="freelancer_review" rows="5" required></textarea>
+                                        </div>
+                                    <?php endif; ?>
                                     <button type="submit" class="btn btn-default">Send review</button>
                                 </form>
                             </div>
@@ -113,7 +149,7 @@ get_header(); ?>
 
                     <?php 
                     // Freelancer and customer review
-                    if ( $status == 'done' || $static == 'once_review' ): ?>
+                    if ( can_review(get_current_user_id(), get_the_ID()) ): ?>
                         <button class="btn" type="button" data-toggle="collapse" data-target="#review_form" aria-expanded="false" aria-controls="review_form">
                             <?php _e('Review', 'buddyfree'); ?>
                         </button>

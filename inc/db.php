@@ -7,14 +7,20 @@ function create_table(){
     $sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}schedule` ( `schedule_id` INT NOT NULL AUTO_INCREMENT , `uid` INT NOT NULL , `time`  VARCHAR(255) NULL, `day`  VARCHAR(20) NOT NULL , `is_hired` VARCHAR(20) NOT NULL DEFAULT '0', `hirer_id` INT NOT NULL DEFAULT '0', `list_hirers` VARCHAR(255) NULL, `date_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`schedule_id`)) ENGINE = InnoDB;";
     $wpdb->query($sql);
 
-    // $sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}schedule` ( `schedule_id` INT NOT NULL AUTO_INCREMENT , `uid` INT NOT NULL , `time`  VARCHAR(255) NULL, `day`  VARCHAR(20) NOT NULL , `is_hired` VARCHAR(20) NOT NULL DEFAULT '0', `hirer_id` INT NOT NULL DEFAULT '0', `list_hirers` VARCHAR(255) NULL, `date_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`schedule_id`)) ENGINE = InnoDB;";
-    // $wpdb->query($sql);
+    $sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}buddy_reviews` ( `review_id` INT NOT NULL AUTO_INCREMENT , `from_id` INT NOT NULL , `to_id` INT NOT NULL , `project_id` INT NOT NULL , `review`  VARCHAR(1000) NULL, `date_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`review_id`)) ENGINE = InnoDB;";
+    $wpdb->query($sql);
 }
 
 
 function add_skill($data){
     global $wpdb;
     $wpdb->insert("{$wpdb->prefix}skills", $data);
+    return $wpdb->insert_id;
+}
+
+function add_review($data){
+    global $wpdb;
+    $wpdb->insert("{$wpdb->prefix}buddy_reviews", $data);
     return $wpdb->insert_id;
 }
 
@@ -74,5 +80,31 @@ function get_uids_by_skills($skill_str){
     $skill_str = implode(',', $skill_str);
     global $wpdb;
     return $wpdb->get_results("SELECT DISTINCT uid FROM `{$wpdb->prefix}schedule` WHERE uid IN (SELECT DISTINCT uid FROM `{$wpdb->prefix}skills` WHERE name IN ({$skill_str})) AND day >= ".strtotime('now').";", ARRAY_A);
+}
+
+function is_reviewed($uid, $project_id){
+    global $wpdb;
+    return count($wpdb->get_results("SELECT * FROM `{$wpdb->prefix}buddy_reviews` WHERE project_id={$project_id} AND (from_id={$uid} OR to_id={$uid});", ARRAY_A));
+}
+
+function get_all_freelancers(){
+    return get_users(array('role' => 'freelancer'));
+}
+
+function can_review($uid, $project_id){
+    if (is_reviewed($uid, $project_id)) {
+        return false;
+    }
+    global $wpdb;
+    $freelancer_id = get_post_meta( $project_id, 'freelancer_id', true );
+    $author_id = $wpdb->get_var("SELECT post_author FROM `{$wpdb->posts}` WHERE ID={$project_id};");
+    $status = get_post_meta( $project_id, 'project_status', true );
+    if ($status == 'done' || $status == 'once_review') {
+        if (get_current_user_id() == $author_id || get_current_user_id() == $freelancer_id){
+            return true;
+        }
+    }
+    return false;
+
 }
 create_table();

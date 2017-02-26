@@ -502,3 +502,7 @@ div#search-form button {
 #review_form .fa {
     cursor: pointer;
 }
+
+#review_form .fa.reated {
+    color: #fc5f09;
+}
