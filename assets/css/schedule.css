@@ -387,6 +387,7 @@ div#search-form button {
     box-shadow: 0 0 5px #ccc;
     padding: 15px;
     margin-bottom: 15px;
+    padding-bottom: 0;
 }
 
 #search-results .result .result-header,
@@ -394,7 +395,6 @@ div#search-form button {
 #search-results .result .result-footer {
     width: 100%;
     z-index: 1;
-    margin-bottom: 10px;
     display: inline-block;
 }
 
@@ -402,6 +402,7 @@ div#search-form button {
     width: 100%;
     max-width: 150px;
     max-height: 150px;
+    height: 100%;
 }
 
 #search-results .result .result-header .user-title {
@@ -460,6 +461,7 @@ div#search-form button {
 
 .result .skills {
     display: inline-block;
+    width: 100%;
 }
 
 .result .rate {
@@ -485,4 +487,10 @@ div#search-form button {
 .avatar {
     border: 1px solid #999 !important;
     border-radius: 50%;
+}
+
+.short-intro {
+    width: 100%;
+    display: inline-block;
+    float: left;
 }
