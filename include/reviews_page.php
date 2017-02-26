@@ -30,11 +30,14 @@
 	            		<?php echo get_the_title( $review['project_id'] ); ?>
             		</a>
 	            </p>
-	            <p>
-	            	Rate: 
-	            	<?php for ($i=0; $i < 5; $i++) :?>
-	            		<i class="fa fa-star <?php if($i <= get_rate($review['from_id'])) echo 'rated';?>" aria-hidden="true"></i>
+	            <div class="rate">
+		            <?php $rate = get_rate($review['from_id']); ?>
+	            	<span><?php echo $rate;?></span>
+	            	<?php for ($i=1; $i <= 5; $i++) :?>
+	            		<i class="fa fa-star <?php if($i <= $rate) echo 'rated';?>" aria-hidden="true"></i>
 	            	<?php endfor; ?>
+	            </div>
+	            	 
 	            </p>
 	        </div>
 	    </div>

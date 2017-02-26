@@ -116,12 +116,11 @@ function get_user_by_skill_ajax(){
                                 </form>
                             </div>
                             <div class="rate">
-                                <span>5.0</span>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <?php $rate = get_rate($review['from_id']); ?>
+                                <span><?php echo ($rate > 0) ? $rate : '0.0';?></span>
+                                <?php for ($i=1; $i <= 5; $i++) :?>
+                                    <i class="fa fa-star <?php if($i <= $rate) echo 'rated';?>" aria-hidden="true"></i>
+                                <?php endfor; ?>
                             </div>
                             <div class="visible-xs">
                                 <span>Fee: <strong>$44/h</strong></span>

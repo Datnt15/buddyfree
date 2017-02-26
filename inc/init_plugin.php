@@ -9,6 +9,7 @@ add_action( 'init', 'buddyfree_load_textdomain' );
  */
 function buddyfree_load_textdomain() {
     load_plugin_textdomain( 'buddyfree', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
+    ob_start();
 }
 
 function register_plugin_styles() {
@@ -79,11 +80,21 @@ function add_search_page(){
     }
 
 
-    if (!post_exists('Add Project')) {
+    if (!post_exists('Hire')) {
         wp_insert_post( array(
-            'post_title'    =>  'Add Project',
+            'post_title'    =>  'Hire',
             'post_type'     => 'page',
             'post_content'  => '[add-project]',
+            'post_status'   => 'publish',
+            'post_author'   => 1
+        ) );
+    }
+
+    if (!post_exists('Registration')) {
+        wp_insert_post( array(
+            'post_title'    =>  'Registration',
+            'post_type'     => 'page',
+            'post_content'  => '[registration]',
             'post_status'   => 'publish',
             'post_author'   => 1
         ) );

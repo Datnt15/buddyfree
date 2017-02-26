@@ -464,11 +464,12 @@ div#search-form button {
     width: 100%;
 }
 
-.result .rate {
-    color: #fc5f09;
-}
+//     .result .rate {
+    //     color: #fc5f09;
+    // }
 
-.result .rate span {
+
+.rate span {
     background-color: #fc5f09;
     color: #fff;
     padding: 2px 5px;

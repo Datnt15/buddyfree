@@ -6,6 +6,12 @@ function render_finding_freelancers() {
 }
 
 
+add_shortcode( 'registration', 'render_registration' );
+function render_registration() {
+    require TEMPLATE.'registration.php';
+}
+
+
 
 add_shortcode( 'add-project', 'render_add_project' );
 function render_add_project() {
