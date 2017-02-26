@@ -32,8 +32,8 @@ function delete_skill_ajax(){
     if (isset($_POST['skill_id'])) {
         echo remove_skill(
             array(
-                'skill_id' => $_POST['skill_id']
-                // 'uid'       => get_current_user_id()
+                'skill_id' => $_POST['skill_id'],
+                'uid'       => get_current_user_id()
             )
         );
         

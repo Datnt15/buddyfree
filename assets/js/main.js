@@ -33,8 +33,6 @@ jQuery(document).ready(function($) {
                 if (parseInt(data)) {
                     _this.parent().remove();
                 }
-
-
             }
         );
         return false;
