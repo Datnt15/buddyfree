@@ -34,15 +34,9 @@ function free_lancing_page(){
 }
 
 function user_review_page(){
-    //add title and content here - last is to call the members plugin.php template
-    //add_action( 'bp_template_title', 'free_lancing_page_title' );
     add_action( 'bp_template_content', 'user_review_page_content' );
     bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
 }
-
-/*function free_lancing_page_title() {
-    //echo 'My Page Title';
-}*/
 
 function free_lancing_page_content() { 
     $user = array_filter(explode('/', $_SERVER['REQUEST_URI']), function($value) { return $value !== ''; });

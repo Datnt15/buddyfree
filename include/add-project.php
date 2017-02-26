@@ -1,4 +1,5 @@
-<form class="form-horizontal" action="" method="POST">
+
+<form class="" action="" method="POST">
     <fieldset>
         <!-- Text input-->
         <?php if ($mes['type'] != ''): ?>
@@ -15,22 +16,25 @@
         
         <div class="form-group">
             <label class="control-label" for="project_title">
-            	Project Title (required)
+            	Job Title (required)
             </label>
             <input id="project_title" name="project_title" type="text" placeholder="Job for PHP Dev" class="form-control input-md" required="">
         </div>
         <div class="form-group">
-            <label class="control-label" for="freelancer_id">
+            <!-- <label class="control-label" for="freelancer_id">
                 Freelancer (optional)
-            </label>
-            
+            </label> -->
+            <?php if (isset($_POST['uid'])): ?>
+                <input type="hidden" name="freelancer_id" value="<?php echo $_POST['uid']; ?>">
+            <?php endif; ?>
+            <!-- 
             <select name="freelancer_id" id="freelancer_id" class="form-control">
                 <?php foreach(get_all_freelancers() as $freelancer): ?>
-                    <option value="<?php echo $freelancer->ID; ?>" <?php if (isset($_POST['uid']) && $_POST['uid'] == $freelancer->ID) echo 'selected'; ?>>
-                        <?php echo $freelancer->data->user_nicename;?>
+                    <option value="<?php //echo $freelancer->ID; ?>" <?php if (isset($_POST['uid']) && $_POST['uid'] == $freelancer->ID) //echo 'selected'; ?>>
+                        <?php //echo $freelancer->data->user_nicename;?>
                     </option>
                 <?php endforeach; ?>
-            </select>
+            </select> -->
         </div>
 
         <!-- Textarea -->
@@ -44,7 +48,7 @@
         <!-- Text input-->
         <div class="form-group">
             <label class="control-label" for="project_price">
-                Price (required)
+                Price (optional)
             </label>
             <input id="project_price" name="project_price" type="text" placeholder="500" class="form-control input-md" required="">
         </div>
@@ -59,9 +63,12 @@
             <label class="control-label">
                 Skills (required)
             </label>
+        </div>
+        <div class="row">
+            
             <?php foreach ($skills as $skill): ?>
-                <label class="col-sm-6">
-                    <input type="checkbox" name="skill_requirement[]" value="<?= $skill['skill_id'];?>">
+                <label class="col-sm-6 col-md-4 col-xs-6" for="skill<?= $skill['skill_id'];?>">
+                    <input type="checkbox" name="skill_requirement[]" id="skill<?= $skill['skill_id'];?>" value="<?= $skill['skill_id'];?>">
                     <?php echo $skill['name']; ?>
                 </label>
             <?php endforeach; ?>

@@ -12,19 +12,21 @@ get_header(); ?>
         $freelancer_id = get_post_meta( get_the_ID(), 'freelancer_id', true );
         $author_id = get_the_author_meta('ID');
         $status = get_post_meta( get_the_ID(), 'project_status', true );
+        $author = get_userdata($author_id);
+        $freelancer = get_userdata($freelancer_id);
 
         // Freelancer accepts to work on this project
         if (isset($_POST['project_id'])) {
             add_user_meta( get_current_user_id(), 'project_id', get_the_ID());
             update_post_meta(get_the_ID(), 'project_status', 'working');
-            wp_mail(get_user_meta( $author_id, 'user_email')[0], 'FREELANCER ACCEPTED', 'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has accepted your project!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
+            wp_mail($author->user_email, 'FREELANCER ACCEPTED', 'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has accepted your project!' . '\r\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
             $mes = 'Great job! We will contact to the employee!';
         }
 
         // The Customer confirm this project is done by now
         if (isset($_POST['confirm_done'])) {
             update_post_meta(get_the_ID(), 'project_status', 'done');
-            wp_mail(get_user_meta( $freelancer_id, 'user_email')[0], 'CONFIRM PROJECT DONE', 'Congratulation! Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has confirm your work is done!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
+            wp_mail($freelancer->user_email, 'CONFIRM PROJECT DONE', 'Congratulation! Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has confirm your work is done!' . '\r\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
             $mes = 'Congratulation!';
         }
 
@@ -42,9 +44,9 @@ get_header(); ?>
 
                 add_user_meta( get_current_user_id(), 'project_id', get_the_ID());
                 wp_mail(
-                    get_user_meta( $author_id, 'user_email')[0], 
+                    $author->user_email, 
                     'FREELANCER REVIEW', 
-                    'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has said something about you!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() )
+                    'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has said something about you!' . '\r\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() )
                 );
                 $mes = 'Great job! We will contact to the employee!';
             } else{
@@ -52,9 +54,9 @@ get_header(); ?>
                 $data['to_id']      = $freelancer_id;
                 $data['review']     = $_POST['customer_review'];
                 wp_mail(
-                    get_user_meta( $freelancer_id, 'user_email')[0], 
+                    $freelancer->user_email, 
                     'CUSTOMER REVIEW', 
-                    'Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has said somthing about you!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() )
+                    'Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has said somthing about you!' . '\r\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() )
                 );
                 $mes = 'Congratulation!';
             }
@@ -69,6 +71,18 @@ get_header(); ?>
         $reviews = get_all_review_by_project_id( get_the_ID() );
         // Global values
         $status = get_post_meta( get_the_ID(), 'project_status', true );
+        if ( bp_is_active( 'notifications' ) ) {
+            bp_notifications_add_notification( array(
+                'user_id'           => $freelancer_id,
+                'item_id'           => $project_id,
+                'secondary_item_id' => $author_id,
+                'component_name'    => '',
+                'component_action'  => 'new_at_mention',
+                'date_notified'     => bp_core_current_time(),
+                'is_new'            => 1
+            ) );
+            echo "string";
+        } 
     ?>
     
         
