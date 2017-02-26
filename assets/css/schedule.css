@@ -494,3 +494,11 @@ div#search-form button {
     display: inline-block;
     float: left;
 }
+
+#review_form {
+    margin-top: 30px;
+}
+
+#review_form .fa {
+    cursor: pointer;
+}

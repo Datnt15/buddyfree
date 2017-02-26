@@ -1,10 +1,13 @@
 jQuery(document).ready(function($) {
+
+    // Toggle add skill text
     $("#add-skill-btn").click(function() {
         $(this).text(function(i, text) {
             return text === "Hide" ? "Add new" : "Hide";
         })
     });
 
+    // Add new skill via ajax
     $("#add-new-skill").on('click', function() {
         var _this = $(this);
         $.post(
@@ -22,6 +25,7 @@ jQuery(document).ready(function($) {
         return false;
     });
 
+    // Remove skill via ajax
     $("#user_skills").on('click', '.skill>i.fa.fa-times', function(event) {
         var _this = $(this);
         $.post(
@@ -38,14 +42,16 @@ jQuery(document).ready(function($) {
         return false;
     });
 
-
+    // Send data to search freelancers
     $("#search-form").on('click', 'button.btn', function() {
         find_freelancer_by_skill();
     });
 
+    // Submit form to hire freelancer
     $("#search-results").on('click', '.hire-me', function() {
         $(this).siblings('form').submit();
     });
+
 
     function find_freelancer_by_skill() {
         var search_results = $("#search-results");
@@ -64,4 +70,17 @@ jQuery(document).ready(function($) {
         });
 
     }
+
+    // Review styling
+    $("#review_form").on('click', '.fa', function() {
+        var index = $(this).index();
+        for (var i = 0; i < $("#review_form .fa").length; i++) {
+            if (i < index) {
+                $("#review_form .fa").eq(i).css('color', '#fc5f09');
+            } else {
+                $("#review_form .fa").eq(i).css('color', 'inherit');
+            }
+        }
+        $('#rate').val(index);
+    });
 });
