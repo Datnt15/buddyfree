@@ -7,7 +7,9 @@ function create_table(){
     $sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}schedule` ( `schedule_id` INT NOT NULL AUTO_INCREMENT , `uid` INT NOT NULL , `time`  VARCHAR(255) NULL, `day`  VARCHAR(20) NOT NULL , `is_hired` VARCHAR(20) NOT NULL DEFAULT '0', `hirer_id` INT NOT NULL DEFAULT '0', `list_hirers` VARCHAR(255) NULL, `date_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`schedule_id`)) ENGINE = InnoDB;";
     $wpdb->query($sql);
 
-    $sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}buddy_reviews` ( `review_id` INT NOT NULL AUTO_INCREMENT , `from_id` INT NOT NULL , `to_id` INT NOT NULL , `project_id` INT NOT NULL , `review`  VARCHAR(1000) NULL, `date_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`review_id`)) ENGINE = InnoDB;";
+    $sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}buddy_reviews` ( `review_id` INT NOT NULL AUTO_INCREMENT , `from_id` INT NOT NULL , `to_id` INT NOT NULL , `project_id` INT NOT NULL , `review`  VARCHAR(1000) NULL, `rate` INT NULL, `date_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`review_id`)) ENGINE = InnoDB;";
+
+    // $wpdb->query("DROP TABLE `{$wpdb->prefix}buddy_reviews`;");
     $wpdb->query($sql);
 }
 
@@ -84,7 +86,7 @@ function get_uids_by_skills($skill_str){
 
 function is_reviewed($uid, $project_id){
     global $wpdb;
-    return count($wpdb->get_results("SELECT * FROM `{$wpdb->prefix}buddy_reviews` WHERE project_id={$project_id} AND (from_id={$uid} OR to_id={$uid});", ARRAY_A));
+    return count($wpdb->get_results("SELECT * FROM `{$wpdb->prefix}buddy_reviews` WHERE project_id={$project_id} AND from_id={$uid};", ARRAY_A));
 }
 
 function get_all_freelancers(){
@@ -99,6 +101,7 @@ function can_review($uid, $project_id){
     $freelancer_id = get_post_meta( $project_id, 'freelancer_id', true );
     $author_id = $wpdb->get_var("SELECT post_author FROM `{$wpdb->posts}` WHERE ID={$project_id};");
     $status = get_post_meta( $project_id, 'project_status', true );
+
     if ($status == 'done' || $status == 'once_review') {
         if (get_current_user_id() == $author_id || get_current_user_id() == $freelancer_id){
             return true;
@@ -107,4 +110,10 @@ function can_review($uid, $project_id){
     return false;
 
 }
+
+function get_all_review_by_project_id($project_id){
+    global $wpdb;
+    return $wpdb->get_results("SELECT * FROM `{$wpdb->prefix}buddy_reviews` WHERE project_id={$project_id} ;", ARRAY_A);
+}
+
 create_table();

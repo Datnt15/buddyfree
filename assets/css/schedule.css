@@ -506,3 +506,11 @@ div#search-form button {
 #review_form .fa.reated {
     color: #fc5f09;
 }
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.review {
+    margin-top: 20px;
+}

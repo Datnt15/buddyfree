@@ -31,21 +31,31 @@ get_header(); ?>
         // Review handle
         if (isset($_POST['rate'])) {
             $data = array(
-                'project_id' => get_the_ID()
+                'project_id'    => get_the_ID(),
+                'rate'          => $_POST['rate']
             );
             if (isset($_POST['freelancer_review'])) {
-                $data['from_id'] = $freelancer_id;
-                $data['to_id'] = $author_id;
-                $data['review'] = $_POST['freelancer_review'];
+                $data['from_id']    = $freelancer_id;
+                $data['to_id']      = $author_id;
+                $data['review']     = $_POST['freelancer_review'];
+                
 
-                // add_user_meta( get_current_user_id(), 'project_id', get_the_ID());
-                wp_mail(get_user_meta( $author_id, 'user_email')[0], 'FREELANCER REVIEW', 'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has said something about you!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
+                add_user_meta( get_current_user_id(), 'project_id', get_the_ID());
+                wp_mail(
+                    get_user_meta( $author_id, 'user_email')[0], 
+                    'FREELANCER REVIEW', 
+                    'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has said something about you!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() )
+                );
                 $mes = 'Great job! We will contact to the employee!';
             } else{
-                $data['from_id'] = $author_id;
-                $data['to_id'] = $freelancer_id;
-                $data['review'] = $_POST['customer_review'];
-                wp_mail(get_user_meta( $freelancer_id, 'user_email')[0], 'CUSTOMER REVIEW', 'Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has said somthing about you!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
+                $data['from_id']    = $author_id;
+                $data['to_id']      = $freelancer_id;
+                $data['review']     = $_POST['customer_review'];
+                wp_mail(
+                    get_user_meta( $freelancer_id, 'user_email')[0], 
+                    'CUSTOMER REVIEW', 
+                    'Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has said somthing about you!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() )
+                );
                 $mes = 'Congratulation!';
             }
             if ($status == 'once_review') {
@@ -56,7 +66,7 @@ get_header(); ?>
             }
             add_review($data);
         }
-
+        $reviews = get_all_review_by_project_id( get_the_ID() );
         // Global values
         $status = get_post_meta( get_the_ID(), 'project_status', true );
     ?>
@@ -93,6 +103,7 @@ get_header(); ?>
                             <?php endforeach; ?>
 
                         </p>
+                        
                     </header>
                     <?php if ( can_review(get_current_user_id(), get_the_ID()) ):?>
                         <div class="collapse col-xs-12" id="review_form">
@@ -123,6 +134,27 @@ get_header(); ?>
                             </div>
                         </div>
                     <?php endif ;?>
+                    <?php if (count($reviews)): ?>
+                        <!-- <div class="clearfix"></div> -->
+                        <h4 class="mt-30">Reviews:</h4>
+                        <?php foreach ($reviews as $review): 
+                            $user = get_userdata( $review['from_id'] );
+                        ?>
+                            <div class="row mt-20 review">
+                                <div class="col-xs-3 col-sm-3 col-md-2">
+                                    <a href="<?php echo USER_PAGE . $user->data->user_login . '/profile';?>">
+                                        <?php echo get_avatar( $review['from_id'], 60); ?>
+                                    </a>
+                                </div>
+                                <div class="col-xs-9 col-sm-9 col-md-10">
+                                    <a href="<?php echo USER_PAGE . $user->data->user_login . '/profile';?>"><?php echo $user->data->user_nicename; ?></a>
+                                    <p>
+                                        <?php echo $review['review']; ?>
+                                    </p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif ?>
                     
                 </div>
                 <div class="col-xs-12 col-sm-3 col-md-2">
@@ -154,7 +186,12 @@ get_header(); ?>
                             <?php _e('Review', 'buddyfree'); ?>
                         </button>
                     <?php endif ; ?>
-                    <strong>
+                    <?php 
+                    // Close project
+                    if ($status == 'closed') :?>
+                        <button class="btn">Closed</button>
+                    <?php endif; ?>
+                    <strong style="margin-top: 30px;">
                         <span class="pull-right">
                             $<?php echo esc_html( get_post_meta( get_the_ID(), 'project_price', true ) ); ?>
                         </span>
