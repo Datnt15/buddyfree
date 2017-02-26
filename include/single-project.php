@@ -80,11 +80,52 @@ get_header(); ?>
                         <?php echo $mes; ?>
                     </div>
                 <?php } ?>
-                <div class="col-xs-3 col-sm-3 col-md-2">
+                <div class="col-xs-6 col-sm-6 col-md-2 pull-left">
                     <?php echo get_avatar( $author_id, 120); ?>
                     <h5><?php the_author();?></h5>
                 </div>
-                <div class="col-xs-9 col-sm-6 col-md-8">
+                <div class="col-xs-6 col-sm-6 col-md-2 pull-right">
+                    
+                    <?php 
+                    // Freelancer login 
+                    if ( $freelancer_id == get_current_user_id() && $freelancer_id != 0 && $status == 'pending'): ?>
+                        <form method="POST" action="">
+                            <button class="btn" type="submit" name="project_id" value="<?php the_ID(); ?>">
+                                <?php _e('Accept', 'buddyfree'); ?>
+                            </button>
+                        </form>
+                    <?php endif ;
+
+                    // Customer login
+                    if ( $author_id == get_current_user_id() && $status == 'working'): ?>
+                        <form method="POST" action="">
+                            <button class="btn" type="submit" name="confirm_done">
+                                <?php _e('Done', 'buddyfree'); ?>
+                            </button>
+                        </form>
+                    <?php endif; ?>
+
+
+                    <?php 
+                    // Freelancer and customer review
+                    if ( can_review(get_current_user_id(), get_the_ID()) ): ?>
+                        <button class="btn" type="button" data-toggle="collapse" data-target="#review_form" aria-expanded="false" aria-controls="review_form">
+                            <?php _e('Review', 'buddyfree'); ?>
+                        </button>
+                    <?php endif ; ?>
+                    <?php 
+                    // Close project
+                    if ($status == 'closed') :?>
+                        <button class="btn">Closed</button>
+                    <?php endif; ?>
+                    <strong style="margin-top: 30px;">
+                        <span class="pull-right">
+                            $<?php echo esc_html( get_post_meta( get_the_ID(), 'project_price', true ) ); ?>
+                        </span>
+                    </strong>
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-8">
                     
                     <header class="entry-header">
          
@@ -136,11 +177,11 @@ get_header(); ?>
                     <?php endif ;?>
                     <?php if (count($reviews)): ?>
                         <!-- <div class="clearfix"></div> -->
-                        <h4 class="mt-30">Reviews:</h4>
+                        <h4 style="padding-top: 30px;">Reviews:</h4>
                         <?php foreach ($reviews as $review): 
                             $user = get_userdata( $review['from_id'] );
                         ?>
-                            <div class="row mt-20 review">
+                            <div class="row review" style="margin-top: 20px;">
                                 <div class="col-xs-3 col-sm-3 col-md-2">
                                     <a href="<?php echo USER_PAGE . $user->data->user_login . '/profile';?>">
                                         <?php echo get_avatar( $review['from_id'], 60); ?>
@@ -157,47 +198,7 @@ get_header(); ?>
                     <?php endif ?>
                     
                 </div>
-                <div class="col-xs-12 col-sm-3 col-md-2">
-                    
-                    <?php 
-                    // Freelancer login 
-                    if ( $freelancer_id == get_current_user_id() && $freelancer_id != 0 && $status == 'pending'): ?>
-                        <form method="POST" action="">
-                            <button class="btn" type="submit" name="project_id" value="<?php the_ID(); ?>">
-                                <?php _e('Accept', 'buddyfree'); ?>
-                            </button>
-                        </form>
-                    <?php endif ;
-
-                    // Customer login
-                    if ( $author_id == get_current_user_id() && $status == 'working'): ?>
-                        <form method="POST" action="">
-                            <button class="btn" type="submit" name="confirm_done">
-                                <?php _e('Done', 'buddyfree'); ?>
-                            </button>
-                        </form>
-                    <?php endif; ?>
-
-
-                    <?php 
-                    // Freelancer and customer review
-                    if ( can_review(get_current_user_id(), get_the_ID()) ): ?>
-                        <button class="btn" type="button" data-toggle="collapse" data-target="#review_form" aria-expanded="false" aria-controls="review_form">
-                            <?php _e('Review', 'buddyfree'); ?>
-                        </button>
-                    <?php endif ; ?>
-                    <?php 
-                    // Close project
-                    if ($status == 'closed') :?>
-                        <button class="btn">Closed</button>
-                    <?php endif; ?>
-                    <strong style="margin-top: 30px;">
-                        <span class="pull-right">
-                            $<?php echo esc_html( get_post_meta( get_the_ID(), 'project_price', true ) ); ?>
-                        </span>
-                    </strong>
-
-                </div>
+                
             </div>
             
  

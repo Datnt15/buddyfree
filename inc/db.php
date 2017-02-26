@@ -116,4 +116,15 @@ function get_all_review_by_project_id($project_id){
     return $wpdb->get_results("SELECT * FROM `{$wpdb->prefix}buddy_reviews` WHERE project_id={$project_id} ;", ARRAY_A);
 }
 
+
+function get_all_review_by_user_id($to_id){
+    global $wpdb;
+    return $wpdb->get_results("SELECT * FROM `{$wpdb->prefix}buddy_reviews` WHERE to_id={$to_id} ;", ARRAY_A);
+}
+
+function get_rate($to_id){
+    global $wpdb;
+    return $wpdb->get_var("SELECT ROUND(AVG(rate), 1) FROM `{$wpdb->prefix}buddy_reviews` WHERE to_id={$to_id} ;");
+}
+
 create_table();

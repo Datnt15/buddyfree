@@ -503,7 +503,7 @@ div#search-form button {
     cursor: pointer;
 }
 
-#review_form .fa.reated {
+.rated {
     color: #fc5f09;
 }
 
