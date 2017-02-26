@@ -6,20 +6,24 @@
 get_header(); ?>
 <div id="primary">
     <div id="content" role="main">
+    <?php $freelancer_id = get_post_meta( get_the_ID(), 'freelancer_id', true );
+    $status = get_post_meta( get_the_ID(), 'project_status', true );
+    $author_id = get_the_author_meta('ID'); ?>
     <?php $mes = ''; ?>
     <?php while ( have_posts() ) : the_post();
         if (isset($_POST['project_id'])) {
             add_user_meta( get_current_user_id(), 'project_id', $_POST['project_id']);
             update_post_meta(get_the_ID(), 'project_status', 'working');
+            wp_mail(get_user_meta( $author_id, 'user_email')[0], 'FREELANCER ACCEPTED', 'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has accepted your project!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
             $mes = 'Great job! We will contact to the employee!';
         }
         if (isset($_POST['confirm_done'])) {
             update_post_meta(get_the_ID(), 'project_status', 'done');
+            wp_mail(get_user_meta( $freelancer_id, 'user_email')[0], 'CONFIRM PROJECT DONE', 'Congratulation! Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has confirm your work is done!' . '\t\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
             $mes = 'Congratulation!';
         }
     ?>
-    <?php $freelancer_id = get_post_meta( get_the_ID(), 'freelancer_id', true );
-    $status = get_post_meta( get_the_ID(), 'project_status', true ); ?>
+    
         
         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> style="margin-top: 30px;">
             <div class="col-md-12">
@@ -30,7 +34,7 @@ get_header(); ?>
                     </div>
                 <?php } ?>
                 <div class="col-xs-3 col-sm-3 col-md-2">
-                    <?php echo get_avatar( get_the_author_meta('ID'), 120); ?>
+                    <?php echo get_avatar( $author_id, 120); ?>
                     <h5><?php the_author();?></h5>
                 </div>
                 <div class="col-xs-9 col-sm-6 col-md-8">

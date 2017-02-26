@@ -34,7 +34,7 @@ function render_add_project() {
         	}
             if ($freelancer_id != 0) {
                 $user = get_userdata($freelancer_id);
-                wp_mail($user->user_email, 'NEW PROJECT GRANTED', 'Customer ' . get_user_meta( get_current_user_id(), 'last_name') . ' has granted you to his new project!' . '\t\n\n' . 'Take a look at ' . get_post_permalink($project_id ));
+                wp_mail($user->user_email, 'NEW PROJECT GRANTED', 'Customer ' . get_user_meta( get_current_user_id(), 'last_name')[0] . ' has granted you to his new project!' . '\t\n\n' . 'Take a look at ' . get_post_permalink($project_id ));
             }
         	
         	$mes['type'] = 'success';
