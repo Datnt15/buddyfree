@@ -1,0 +1,98 @@
+Kỹ năng cho wp plugin
+1 - Tạo plugin : 
+
+a - tạo thư mục myplugin trong wp-content\plugins
+b - tạo file main.php trong thư mục myplugin và paste đoạn code này vào
+
+<!------------------------------------------------------------------->
+
+<?php
+
+/*
+Plugin Name: "Tên Plugin"
+*/
+
+?>
+
+<!------------------------------------------------------------------->
+
+c - Kiểm tra trong dashboard sẽ thấy tên plugin hiện trong danh sách
+
+
+2 - Đăng ký shortcode 
+
+<!------------------------------------------------------------------->
+
+<?php
+
+
+function my_short_code_function($params) {
+    // do something
+    echo "<h1>Hello</h1>";
+}
+
+add_shortcode( 'my_short_code', 'my_short_code_function' );
+
+?>
+
+<!------------------------------------------------------------------->
+
+Khi sử dụng sẽ dùng [my_short_code];
+
+
+
+3 - Đăng ký shortcode có tham số truyền vào 
+
+<!------------------------------------------------------------------->
+
+<?php
+
+
+function my_short_code_function($params) {
+
+	//get shortcode input 
+
+	$a = shortcode_atts( array(
+        'p1' => 'something',
+        'p2' => 'something else',
+    ), $params );
+
+
+    // do something
+    echo "<h1>p1 is </h1>". $params['p1'];
+}
+
+add_shortcode( 'my_short_code', 'my_short_code_function' );
+
+?>
+
+<!------------------------------------------------------------------->
+
+Khi sử dụng sẽ dùng [my_short_code p1="ha nguyen" p2="hello"]
+
+4 - Đăng ký shortcode dạng [caption]My Caption[/caption]
+
+// Sẽ cập nhật tiếp
+
+5 - Đăng ký file css cho plugin
+
+<!------------------------------------------------------------------->
+
+// Register style sheet.
+add_action( 'wp_enqueue_scripts', 'register_plugin_styles' );
+
+/**
+ * Register style sheet.
+ */
+function register_plugin_styles() {
+	wp_register_style( 'my-plugin', plugins_url( 'my-plugin/css/plugin.css' ) );
+	wp_enqueue_style( 'my-plugin' );
+}
+
+<!------------------------------------------------------------------->
+
+6 - Đăng ký script cho Plugin 
+
+// Sẽ cập nhật tiếp
+
+7 - Kiểm tra user đã đăng nhập hay chưa : is_user_logged_in() 
