@@ -34,21 +34,21 @@ function register_js_script() {
     //get some external script that is needed for this script
     wp_enqueue_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'); 
     
-    wp_enqueue_script('bootstrap-js', plugins_url(PLUGIN_FOLDER.'/assets/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js'));
+    wp_register_script('bootstrap-js', plugins_url(PLUGIN_FOLDER.'/assets/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js'));
 
-    wp_enqueue_script('main-js', plugins_url(PLUGIN_FOLDER.'/assets/js/main.js'));  
-    wp_enqueue_script('jquery2-js', plugins_url(PLUGIN_FOLDER.'/assets/js/jquery2.js'));  
-    wp_enqueue_script('prism-js', plugins_url(PLUGIN_FOLDER.'/assets/js/prism.js'));    
-    wp_enqueue_script('underscore-js', plugins_url(PLUGIN_FOLDER.'/assets/js/underscore.js'));  
-    wp_enqueue_script('moment-js', plugins_url(PLUGIN_FOLDER.'/assets/js/moment.js'));  
-    wp_enqueue_script('clndr-js', plugins_url(PLUGIN_FOLDER.'/assets/js/clndr.js'));    
-    wp_enqueue_script('site-js', plugins_url(PLUGIN_FOLDER.'/assets/js/site.js'));	
+    wp_register_script('jquery2-js', plugins_url(PLUGIN_FOLDER.'/assets/js/jquery2.js'));  
+    wp_register_script('prism-js', plugins_url(PLUGIN_FOLDER.'/assets/js/prism.js'));    
+    wp_register_script('underscore-js', plugins_url(PLUGIN_FOLDER.'/assets/js/underscore.js'));  
+    wp_register_script('moment-js', plugins_url(PLUGIN_FOLDER.'/assets/js/moment.js'));  
+    wp_register_script('clndr-js', plugins_url(PLUGIN_FOLDER.'/assets/js/clndr.js'));    
+    wp_register_script('site-js', plugins_url(PLUGIN_FOLDER.'/assets/js/site.js')); 
+    wp_register_script('main-js', plugins_url(PLUGIN_FOLDER.'/assets/js/main.js'));  
     
-    wp_enqueue_script('jquery');
 
+    wp_enqueue_script('jquery-ui-autocomplete', '');
+    wp_enqueue_script('main-js');
     wp_enqueue_script('bootstrap-js');
-
-    wp_enqueue_script('main-js');    
+    wp_enqueue_script('jquery2-js');
     wp_enqueue_script('prism-js');    
     wp_enqueue_script('underscore-js');    
     wp_enqueue_script('moment-js');    

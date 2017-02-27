@@ -67,9 +67,9 @@
         <div class="row">
             
             <?php foreach ($skills as $skill): ?>
-                <label class="col-sm-6 col-md-4 col-xs-6" for="skill<?= $skill['skill_id'];?>">
-                    <input type="checkbox" name="skill_requirement[]" id="skill<?= $skill['skill_id'];?>" value="<?= $skill['skill_id'];?>">
-                    <?php echo $skill['name']; ?>
+                <label class="col-sm-6 col-md-4 col-xs-6" for="skill<?= $skill['id'];?>">
+                    <input type="checkbox" name="skill_requirement[]" id="skill<?= $skill['id'];?>" value="<?= $skill['id'];?>">
+                    <?php echo $skill['skill_name']; ?>
                 </label>
             <?php endforeach; ?>
         </div>

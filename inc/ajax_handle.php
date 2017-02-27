@@ -10,15 +10,8 @@ add_action( 'wp_ajax_nopriv_add_skill_ajax', 'add_skill_ajax' );
 
 function add_skill_ajax(){
 
-    if (isset($_POST['new_skill'])) {
-        echo add_skill(
-            array(
-                'uid'       => get_current_user_id(),
-                'name'      => $_POST['new_skill'],
-                'slug'      => str_replace(' ', '-', $_POST['new_skill']),
-                'parent_id' => '0'
-            )
-        );
+    if (isset($_POST['skill_id'])) {
+        echo add_user_meta( get_current_user_id(), 'skills_id', $_POST['skill_id']);
     }
     die();
 }
@@ -30,13 +23,7 @@ add_action( 'wp_ajax_nopriv_delete_skill_ajax', 'delete_skill_ajax' );
 function delete_skill_ajax(){
 
     if (isset($_POST['skill_id'])) {
-        echo remove_skill(
-            array(
-                'skill_id' => $_POST['skill_id'],
-                'uid'       => get_current_user_id()
-            )
-        );
-        
+        echo delete_user_meta( get_current_user_id(), 'skills_id', $_POST['skill_id'] );
     }
     die();
 }
@@ -71,6 +58,7 @@ function get_schedule_by_id_ajax(){
     echo json_encode( get_schedule_by_uid( get_current_user_id() ) );
     die();
 }
+
 
 // find user by skill 
 add_action( 'wp_ajax_get_user_by_skill_ajax', 'get_user_by_skill_ajax' );
@@ -134,10 +122,10 @@ function get_user_by_skill_ajax(){
                                 </div>
                             </div>
                             <div class="skills">
-                                <?php $skills = get_skill_by_uid($uid, 5); 
+                                <?php $skills = get_skill_by_uid($uid, 6); 
                                 foreach ($skills as $skill) {?>
                                     <span class="skill-text">
-                                        <?php echo $skill['name']; ?>
+                                        <?php echo $skill['skill_name']; ?>
                                     </span>
                                 <?php }?>
                             </div>
@@ -156,6 +144,26 @@ function get_user_by_skill_ajax(){
             </div>
         <?php endif; 
 
+    }
+    die();
+}
+
+
+// find user by skill 
+add_action( 'wp_ajax_search_skill_autocomplete', 'search_skill_autocomplete' );
+add_action( 'wp_ajax_nopriv_search_skill_autocomplete', 'search_skill_autocomplete' );
+
+function search_skill_autocomplete(){
+    $skills = search_skill_by_key($_POST['key']);
+    if (count($skills)) {
+        foreach ($skills as $skill) {?>
+            <span class="skill" data-id="<?php echo $skill['id']; ?>">
+                <?php echo $skill['skill_name']; ?>
+            </span>
+        <?php }
+    }
+    else{
+        echo "<h4>No result match! Try other key</h4>";
     }
     die();
 }

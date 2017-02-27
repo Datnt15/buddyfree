@@ -1,9 +1,7 @@
 <?php 
 function create_table(){
     global $wpdb;
-    $sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}skills` ( `skill_id` INT NOT NULL AUTO_INCREMENT , `uid` INT NOT NULL , `name`  VARCHAR(50) NULL , `slug` VARCHAR(50) NULL , `parent_id` INT NULL DEFAULT '0' , `date_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`skill_id`)) ENGINE = InnoDB;";
-    $wpdb->query($sql);
-
+    
     $sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}schedule` ( `schedule_id` INT NOT NULL AUTO_INCREMENT , `uid` INT NOT NULL , `time`  VARCHAR(255) NULL, `day`  VARCHAR(20) NOT NULL , `is_hired` VARCHAR(20) NOT NULL DEFAULT '0', `hirer_id` INT NOT NULL DEFAULT '0', `list_hirers` VARCHAR(255) NULL, `date_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`schedule_id`)) ENGINE = InnoDB;";
     $wpdb->query($sql);
 
@@ -14,37 +12,28 @@ function create_table(){
 }
 
 
-function add_skill($data){
-    global $wpdb;
-    $wpdb->insert("{$wpdb->prefix}skills", $data);
-    return $wpdb->insert_id;
-}
-
 function add_review($data){
     global $wpdb;
     $wpdb->insert("{$wpdb->prefix}buddy_reviews", $data);
     return $wpdb->insert_id;
 }
 
-function remove_skill($where){
+function search_skill_by_key($key){
     global $wpdb;
-    $sql = "DELETE FROM `{$wpdb->prefix}skills` WHERE uid={$where['uid']} AND name=(SELECT * FROM (SELECT name FROM `{$wpdb->prefix}skills` WHERE skill_id={$where['skill_id']}) as skill_name);";
-    return $wpdb->query( $sql );
+    return $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}skill` WHERE skill_name LIKE '%{$key}%';", ARRAY_A );
 }
 
 function get_skill_by_uid($uid, $limit = 100){
     global $wpdb;
-    return $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}skills` WHERE uid={$uid} GROUP BY name LIMIT {$limit};", ARRAY_A );
+    $skills_id = get_user_meta($uid, 'skills_id');
+    
+    return $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}skill` WHERE id in (" . implode(',',$skills_id) . ") LIMIT {$limit};", ARRAY_A );
 }
 
-function get_skill_by_skill_id($skill_id){
-    global $wpdb;
-    return $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}skills` WHERE skill_id={$skill_id};", ARRAY_A );
-}
 
 function get_list_skill(){
     global $wpdb;
-    return $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}skills` GROUP BY name;", ARRAY_A );
+    return $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}skill` GROUP BY skill_name;", ARRAY_A );
 }
 
 function save_schedule($data){
@@ -75,13 +64,13 @@ function search_schedule_by_uid($uid){
 }
 
 function get_uids_by_skills($skill_str){
-    $skill_str = explode(',', $skill_str);
-    foreach ($skill_str as &$key) {
-        $key = "'".trim($key)."'";
-    }
-    $skill_str = implode(',', $skill_str);
+    // $skill_str = explode(',', $skill_str);
+    // foreach ($skill_str as &$key) {
+    //     $key = "'".trim($key)."'";
+    // }
+    // $skill_str = implode(',', $skill_str);
     global $wpdb;
-    return $wpdb->get_results("SELECT DISTINCT uid FROM `{$wpdb->prefix}schedule` WHERE uid IN (SELECT DISTINCT uid FROM `{$wpdb->prefix}skills` WHERE name IN ({$skill_str})) AND day >= ".strtotime('now').";", ARRAY_A);
+    return $wpdb->get_results("SELECT DISTINCT uid FROM `{$wpdb->prefix}schedule` WHERE uid IN (SELECT DISTINCT user_id FROM `{$wpdb->prefix}usermeta` WHERE meta_key='skills_id' AND meta_value IN (SELECT id FROM `{$wpdb->prefix}skill` WHERE skill_name LIKE '%{$skill_str}%')) AND day >= ".strtotime('now').";", ARRAY_A);
 }
 
 function is_reviewed($uid, $project_id){

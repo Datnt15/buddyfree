@@ -23,10 +23,11 @@
 			<div class="collapse" id="add-skill-form">
 		        <form class="form-inline" action="" method="POST">
 				    <div class="form-group">
-				        <input type="text" class="form-control" name="new_skill" placeholder="Find a skill">
-					    <button type="submit" class="add-skill-btn btn btn-default" id="add-new-skill">
+				        <input type="text" class="form-control" id="new_skill" name="new_skill" placeholder="Find a skill">
+					    <!-- <button type="submit" class="add-skill-btn btn btn-default" id="add-new-skill">
 					    	Add
-					    </button>
+					    </button> -->
+					    <div id="sugget_results"></div>
 				    </div>
 				</form>
 			</div>
@@ -34,9 +35,9 @@
 		<div id="user_skills">
 			<?php foreach ($skills as $skill) {?>
 				<span class="skill">
-					<?php echo $skill['name']; ?>
+					<?php echo $skill['skill_name']; ?>
 					<?php if ($is_author): ?>
-						<i class="fa fa-times" id="<?php echo $skill['skill_id']; ?>" aria-hidden="true"></i>
+						<i class="fa fa-times" id="<?php echo $skill['id']; ?>" aria-hidden="true"></i>
 					<?php endif; ?>
 				</span>
 			<?php }?>

@@ -465,10 +465,8 @@ div#search-form button {
 }
 
 //     .result .rate {
-    //     color: #fc5f09;
-    // }
-
-
+//     color: #fc5f09;
+// }
 .rate span {
     background-color: #fc5f09;
     color: #fff;
@@ -514,4 +512,14 @@ div#search-form button {
 
 .review {
     margin-top: 20px;
+}
+
+div#sugget_results {
+    width: 70%;
+    height: auto;
+    display: inline-block;
+    box-shadow: 0px 9px 22px #ccc;
+    padding: 10px 0;
+    max-height: 150px;
+    overflow-y: scroll;
 }
