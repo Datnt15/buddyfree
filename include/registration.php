@@ -1,8 +1,8 @@
 <?php
 	
-// if (is_user_logged_in()) {
-// 	wp_safe_redirect( get_home_url() );
-// }
+if (is_user_logged_in()) {
+	wp_safe_redirect( get_home_url() );
+}
 $mes = array('type' => '', 'content' => '');
 if (isset($_POST['type'])) {
 	$user_id = username_exists( $_POST['username'] );

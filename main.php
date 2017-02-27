@@ -27,3 +27,7 @@ include 'inc/ajax_handle.php';
 
 // Shortcode
 include 'inc/short_code.php';
+
+// Admin Skills Managerment
+
+include 'inc/admin_manage_skill.php';
