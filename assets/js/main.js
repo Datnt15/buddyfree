@@ -7,23 +7,36 @@ jQuery(document).ready(function($) {
         })
     });
 
-    // Add new skill via ajax
-    $("#add-new-skill").on('click', function() {
-        var _this = $(this);
+    $("#sugget_results").fadeOut();
+    // Autocomplete
+    $("#new_skill").keyup(function() {
+        $.post(
+            ajaxurl, {
+                action: 'search_skill_autocomplete',
+                key: $(this).val()
+            },
+            function(data) {
+                $("#sugget_results").fadeIn().html(data);
+            }
+        );
+    });
+
+    $("#sugget_results").on('click', '.skill', function(event) {
+        var div = $(this);
+        $("#user_skills").append($(this));
         $.post(
             ajaxurl, {
                 action: 'add_skill_ajax',
-                new_skill: _this.parent().find('input[name="new_skill"]').val()
+                skill_id: div.attr('data-id')
             },
             function(data) {
-                $("#user_skills").append('<span class="skill">' +
-                    _this.parent().find('input[name="new_skill"]').val() +
-                    '  <i class="fa fa-times" id="' + data + '" aria-hidden="true"></i></span>');
-                _this.parent().find('input[name="new_skill"]').val('').focus();
+                div.append('<i class="fa fa-times" id="' +
+                    div.attr('data-id') + '" aria-hidden="true"></i>');
+                $("#sugget_results").fadeOut().html('');
             }
         );
-        return false;
     });
+
 
     // Remove skill via ajax
     $("#user_skills").on('click', '.skill>i.fa.fa-times', function(event) {
@@ -75,6 +88,7 @@ jQuery(document).ready(function($) {
     $("#review_form").on('click', '.fa', function() {
         var index = $(this).index();
         for (var i = 0; i < $("#review_form .fa").length; i++) {
+
             if (i < index) {
                 $("#review_form .fa").eq(i).addClass('rated');
             } else {
@@ -84,19 +98,20 @@ jQuery(document).ready(function($) {
         $('#rate').val(index);
     });
 
-    $("#review_form .fa").hover(function() {
-        var index = $(this).index();
-        for (var i = 0; i < $("#review_form .fa").length; i++) {
-            if (i < index) {
-                $("#review_form .fa").eq(i).addClass('rated');
-            } else {
-                $("#review_form .fa").eq(i).removeClass('rated');
-            }
-        }
-    }, function() {
-        for (var i = 0; i < $("#review_form .fa").length; i++) {
-            $("#review_form .fa").eq(i).removeClass('rated');
+    // $("#review_form .fa").hover(function() {
+            //     var index = $(this).index();
+            //     for (var i = 0; i < $("#review_form .fa").length; i++) {
+            //         if (i < index) {
+            //             $("#review_form .fa").eq(i).addClass('rated');
+            //         } else {
+            //             $("#review_form .fa").eq(i).removeClass('rated');
+            //         }
+            //     }
+            // }, function() {
+            //     for (var i = 0; i < $("#review_form .fa").length; i++) {
+            //         $("#review_form .fa").eq(i).removeClass('rated');
 
-        }
-    });
+            //     }
+            // });
+
 });
