@@ -23,6 +23,11 @@ function search_skill_by_key($key){
     return $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}skill` WHERE skill_name LIKE '%{$key}%';", ARRAY_A );
 }
 
+function get_skill_by_skill_id($id){
+    global $wpdb;
+    return $wpdb->get_results( "SELECT skill_name FROM `{$wpdb->prefix}skill` WHERE id={$id};", ARRAY_A );
+}
+
 function get_skill_by_uid($uid, $limit = 100){
     global $wpdb;
     $skills_id = get_user_meta($uid, 'skills_id');

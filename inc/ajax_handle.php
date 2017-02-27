@@ -97,8 +97,8 @@ function get_user_by_skill_ajax(){
                                 <a href="<?= $user_url.'/profile';?>">
                                     <?php echo $user->first_name . ' ' . $user->last_name; ?>
                                 </a>
-                                <span class="hire-me">Hire me</span>
-                                <span class="price pull-right hidden-xs">$44/h</span>
+                                <span class="hire-me pull-right">Hire me</span>
+                                <!-- <span class="price pull-right hidden-xs">$44/h</span> -->
                                 <form method="POST" action="<?= ADD_PROJECT_URL; ?>">
                                     <input type="hidden" name="uid" value="<?= $uid; ?>">
                                 </form>
@@ -110,9 +110,9 @@ function get_user_by_skill_ajax(){
                                     <i class="fa fa-star <?php if($i <= $rate) echo 'rated';?>" aria-hidden="true"></i>
                                 <?php endfor; ?>
                             </div>
-                            <div class="visible-xs">
+                            <!-- <div class="visible-xs">
                                 <span>Fee: <strong>$44/h</strong></span>
-                            </div>
+                            </div> -->
 
                             <div class="short-intro">
                                 <div class="available-days">

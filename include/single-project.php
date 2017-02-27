@@ -19,14 +19,14 @@ get_header(); ?>
         if (isset($_POST['project_id'])) {
             add_user_meta( get_current_user_id(), 'project_id', get_the_ID());
             update_post_meta(get_the_ID(), 'project_status', 'working');
-            wp_mail($author->user_email, 'FREELANCER ACCEPTED', 'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has accepted your project!' . '\r\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
+            wp_mail($author->user_email, 'FREELANCER ACCEPTED', 'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has accepted your job! Take a look at ' . get_post_permalink( get_the_ID() ));
             $mes = 'Great job! We will contact to the employee!';
         }
 
         // The Customer confirm this project is done by now
         if (isset($_POST['confirm_done'])) {
             update_post_meta(get_the_ID(), 'project_status', 'done');
-            wp_mail($freelancer->user_email, 'CONFIRM PROJECT DONE', 'Congratulation! Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has confirm your work is done!' . '\r\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() ));
+            wp_mail($freelancer->user_email, 'CONFIRM JOB DONE', 'Congratulation! Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has confirm your work is done! Take a look at ' . get_post_permalink( get_the_ID() ));
             $mes = 'Congratulation!';
         }
 
@@ -46,7 +46,7 @@ get_header(); ?>
                 wp_mail(
                     $author->user_email, 
                     'FREELANCER REVIEW', 
-                    'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has said something about you!' . '\r\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() )
+                    'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has said something about you! Take a look at ' . get_post_permalink( get_the_ID() )
                 );
                 $mes = 'Great job! We will contact to the employee!';
             } else{
@@ -56,7 +56,7 @@ get_header(); ?>
                 wp_mail(
                     $freelancer->user_email, 
                     'CUSTOMER REVIEW', 
-                    'Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has said somthing about you!' . '\r\n\n' . 'Take a look at ' . get_post_permalink( get_the_ID() )
+                    'Customer ' . get_user_meta( $author_id , 'last_name')[0] . ' has said somthing about you! Take a look at ' . get_post_permalink( get_the_ID() )
                 );
                 $mes = 'Congratulation!';
             }
@@ -71,18 +71,6 @@ get_header(); ?>
         $reviews = get_all_review_by_project_id( get_the_ID() );
         // Global values
         $status = get_post_meta( get_the_ID(), 'project_status', true );
-        if ( bp_is_active( 'notifications' ) ) {
-            bp_notifications_add_notification( array(
-                'user_id'           => $freelancer_id,
-                'item_id'           => $project_id,
-                'secondary_item_id' => $author_id,
-                'component_name'    => '',
-                'component_action'  => 'new_at_mention',
-                'date_notified'     => bp_core_current_time(),
-                'is_new'            => 1
-            ) );
-            echo "string";
-        } 
     ?>
     
         
@@ -153,7 +141,7 @@ get_header(); ?>
                             <?php $skills = unserialize(get_post_meta( get_the_ID(), 'skill_requirement', true )); 
                             foreach ($skills as $skill_id): ?>
                                 <span class="skill">
-                                    <?php echo get_skill_by_skill_id($skill_id)[0]['name']; ?>
+                                    <?php echo get_skill_by_skill_id($skill_id)[0]['skill_name']; ?>
                                 </span>
                             <?php endforeach; ?>
 
