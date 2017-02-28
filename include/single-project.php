@@ -26,7 +26,6 @@ get_header(); ?>
 
         // Freelancer accepts to work on this project
         if (isset($_POST['reject'])) {
-            add_user_meta( get_current_user_id(), 'project_id', get_the_ID());
             update_post_meta(get_the_ID(), 'project_status', 'rejected');
             wp_mail($author->user_email, 'FREELANCER REJECTED', 'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has rejected your job! Please choose other one! Take a look at ' . get_post_permalink( get_the_ID() ));
             $mes = 'So sad! We will contact to the employee!';
