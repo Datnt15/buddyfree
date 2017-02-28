@@ -68,14 +68,9 @@ function search_schedule_by_uid($uid){
     return $wpdb->get_results("SELECT day FROM `{$wpdb->prefix}schedule` WHERE uid={$uid} AND day >= ".strtotime('now')." LIMIT 7;", ARRAY_A);
 }
 
-function get_uids_by_skills($skill_str){
-    // $skill_str = explode(',', $skill_str);
-    // foreach ($skill_str as &$key) {
-    //     $key = "'".trim($key)."'";
-    // }
-    // $skill_str = implode(',', $skill_str);
+function get_uids_by_skills($skill_id){
     global $wpdb;
-    return $wpdb->get_results("SELECT DISTINCT uid FROM `{$wpdb->prefix}schedule` WHERE uid IN (SELECT DISTINCT user_id FROM `{$wpdb->prefix}usermeta` WHERE meta_key='skills_id' AND meta_value IN (SELECT id FROM `{$wpdb->prefix}skill` WHERE skill_name LIKE '%{$skill_str}%')) AND day >= ".strtotime('now').";", ARRAY_A);
+    return $wpdb->get_results("SELECT DISTINCT uid FROM `{$wpdb->prefix}schedule` WHERE uid IN (SELECT DISTINCT user_id FROM `{$wpdb->prefix}usermeta` WHERE meta_key='skills_id' AND meta_value IN (SELECT id FROM `{$wpdb->prefix}skill` WHERE skill_name LIKE '%{$skill_id}%')) AND day >= ".strtotime('now').";", ARRAY_A);
 }
 
 function is_reviewed($uid, $project_id){

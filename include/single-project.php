@@ -16,11 +16,20 @@ get_header(); ?>
         $freelancer = get_userdata($freelancer_id);
 
         // Freelancer accepts to work on this project
-        if (isset($_POST['project_id'])) {
+        if (isset($_POST['accept'])) {
             add_user_meta( get_current_user_id(), 'project_id', get_the_ID());
             update_post_meta(get_the_ID(), 'project_status', 'working');
             wp_mail($author->user_email, 'FREELANCER ACCEPTED', 'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has accepted your job! Take a look at ' . get_post_permalink( get_the_ID() ));
             $mes = 'Great job! We will contact to the employee!';
+        }
+
+
+        // Freelancer accepts to work on this project
+        if (isset($_POST['reject'])) {
+            add_user_meta( get_current_user_id(), 'project_id', get_the_ID());
+            update_post_meta(get_the_ID(), 'project_status', 'rejected');
+            wp_mail($author->user_email, 'FREELANCER REJECTED', 'Freelancer ' . get_user_meta( $freelancer_id, 'last_name')[0] . ' has rejected your job! Please choose other one! Take a look at ' . get_post_permalink( get_the_ID() ));
+            $mes = 'So sad! We will contact to the employee!';
         }
 
         // The Customer confirm this project is done by now
@@ -84,16 +93,19 @@ get_header(); ?>
                 <?php } ?>
                 <div class="col-xs-6 col-sm-6 col-md-2 pull-left">
                     <?php echo get_avatar( $author_id, 120); ?>
-                    <h5><?php the_author();?></h5>
+                    <h5 class="text-center"><?php the_author();?></h5>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-2 pull-right">
+                <div class="col-xs-6 col-sm-6 col-md-2 pull-right text-center">
                     
                     <?php 
                     // Freelancer login 
                     if ( $freelancer_id == get_current_user_id() && $freelancer_id != 0 && $status == 'pending'): ?>
                         <form method="POST" action="">
-                            <button class="btn" type="submit" name="project_id" value="<?php the_ID(); ?>">
+                            <button class="btn pull-left" style="width: auto; padding: 10px;" type="submit" name="accept">
                                 <?php _e('Accept', 'buddyfree'); ?>
+                            </button>
+                            <button class="btn pull-right" style="width: auto; padding: 10px;" type="submit" name="reject">
+                                <?php _e('Reject', 'buddyfree'); ?>
                             </button>
                         </form>
                     <?php endif ;
@@ -190,7 +202,7 @@ get_header(); ?>
                                     </a>
                                 </div>
                                 <div class="col-xs-9 col-sm-9 col-md-10">
-                                    <a href="<?php echo USER_PAGE . $user->data->user_login . '/profile';?>"><?php echo $user->data->user_nicename; ?></a>
+                                    <a href="<?php echo USER_PAGE . $user->data->user_login . '/profile';?>"><?php echo $user->data->display_name; ?></a>
                                     <p>
                                         <?php echo $review['review']; ?>
                                     </p>

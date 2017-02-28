@@ -49,7 +49,7 @@ function free_lancing_page_content() {
 
 function user_review_page_content() { 
     $uid = bp_displayed_user_id();
-    $reviews = get_all_review_by_user_id(username_exists($uid));
+    $reviews = get_all_review_by_user_id($uid);
     require TEMPLATE.'reviews_page.php';
 }
 //buddypress cover size

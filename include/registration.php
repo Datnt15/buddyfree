@@ -86,7 +86,6 @@ if (isset($_POST['type'])) {
 	            </label>
 	            <input id="last_name" name="last_name" type="text" placeholder="Doe" class="form-control" required="">
 	        </div>
-	        
 
 	        <!-- Text input-->
 	        <div class="form-group">
