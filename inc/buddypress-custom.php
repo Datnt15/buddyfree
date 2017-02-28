@@ -39,19 +39,17 @@ function user_review_page(){
 }
 
 function free_lancing_page_content() { 
-    $user = array_filter(explode('/', $_SERVER['REQUEST_URI']), function($value) { return $value !== ''; });
-    $user = $user[3];
-    $is_author = username_exists($user)==get_current_user_id();
-    $skills = get_skill_by_uid(username_exists($user));
+    $uid = bp_displayed_user_id();
+    
+    $is_author = $uid==get_current_user_id();
+    $skills = get_skill_by_uid($uid);
     require TEMPLATE.'freelancing_page.php';
 }
 
 
 function user_review_page_content() { 
-    $user = array_filter(explode('/', $_SERVER['REQUEST_URI']), function($value) { return $value !== ''; });
-    $user = $user[3];
-    // $is_author = username_exists($user)==get_current_user_id();
-    $reviews = get_all_review_by_user_id(username_exists($user));
+    $uid = bp_displayed_user_id();
+    $reviews = get_all_review_by_user_id(username_exists($uid));
     require TEMPLATE.'reviews_page.php';
 }
 //buddypress cover size

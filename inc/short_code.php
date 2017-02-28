@@ -46,7 +46,7 @@ function render_add_project() {
             
         	
         	$mes['type'] = 'success';
-        	$mes['content'] = 'Your job is posted. Take a look at ' . get_post_permalink($project_id );
+        	$mes['content'] = 'Your job is posted. Take a look at <a href="' . get_post_permalink($project_id ) . '">' . $_POST['project_title'] . '</a>';
         }else{
         	$mes['type'] = 'warning';
         	$mes['content'] = 'Some errors occured';

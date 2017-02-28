@@ -95,7 +95,7 @@ function get_user_by_skill_ajax(){
                         <div class="user-title col-xs-9 col-sm-10">
                             <div class="name">
                                 <a href="<?= $user_url.'/profile';?>">
-                                    <?php echo $user->first_name . ' ' . $user->last_name; ?>
+                                    <?php echo $user->user_login; ?>
                                 </a>
                                 <span class="hire-me pull-right">Hire me</span>
                                 <!-- <span class="price pull-right hidden-xs">$44/h</span> -->
