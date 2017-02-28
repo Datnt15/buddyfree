@@ -18,9 +18,10 @@ if (isset($_POST['type'])) {
 		$user_id = wp_create_user( $_POST['username'], $_POST['password'], $_POST['email'] );
 		wp_update_user(
 			array(
-				'display_name' 	=> $_POST['username'],
-				'first_name' 	=> $_POST['username'],
-				'first_name' 	=> $_POST['username'],
+				'ID' 			=> $user_id,
+				'display_name' 	=> $_POST['first_name'] . ' ' . $_POST['last_name'],
+				'first_name' 	=> $_POST['first_name'],
+				'last_name' 	=> $_POST['last_name'],
 				'nickname' 		=> $_POST['username'],
 				'role' 			=> $_POST['type']
 			)
@@ -51,10 +52,9 @@ if (isset($_POST['type'])) {
 	            <label class="control-label" for="username">
 	            	Username:
 	            </label>
-	            <input id="username" name="username" type="text" placeholder="user_name" class="form-control" required="">
+	            <input id="username" name="username" type="text" placeholder="John_doe_15" class="form-control" required="">
 	        </div>
 	        
-
 	        <!-- Textarea -->
 	        <div class="form-group">
 	            <label class="control-label" for="password">
@@ -70,7 +70,23 @@ if (isset($_POST['type'])) {
 	            </label>
 	            <input id="email" name="email" type="email" placeholder="email@gmail.com" class="form-control input-md" required="">
 	        </div>
+			
+			
+	        <div class="form-group">
+	            <label class="control-label" for="first_name">
+	            	First name:
+	            </label>
+	            <input id="first_name" name="first_name" type="text" placeholder="John" class="form-control" required="">
+	        </div>
+	        
 
+	        <div class="form-group">
+	            <label class="control-label" for="last_name">
+	            	Last name:
+	            </label>
+	            <input id="last_name" name="last_name" type="text" placeholder="Doe" class="form-control" required="">
+	        </div>
+	        
 
 	        <!-- Text input-->
 	        <div class="form-group">
