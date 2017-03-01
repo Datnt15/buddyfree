@@ -55,7 +55,7 @@ add_action( 'wp_ajax_get_schedule_by_id_ajax', 'get_schedule_by_id_ajax' );
 add_action( 'wp_ajax_nopriv_get_schedule_by_id_ajax', 'get_schedule_by_id_ajax' );
 
 function get_schedule_by_id_ajax(){
-    echo json_encode( get_schedule_by_uid( get_current_user_id() ) );
+    echo json_encode( get_schedule_by_uid( bp_displayed_user_id() ) );
     die();
 }
 
